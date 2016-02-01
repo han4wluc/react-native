@@ -187,7 +187,7 @@ public class ReactTextShadowNode extends LayoutShadowNode {
     buildSpannedFromTextCSSNode(textCSSNode, sb, ops);
     if (textCSSNode.mFontSize == UNSET) {
       sb.setSpan(
-          new AbsoluteSizeSpan((int) Math.ceil(PixelUtil.toPixelFromSP(ViewDefaults.FONT_SIZE_SP))),
+          new AbsoluteSizeSpan((int) Math.ceil(PixelUtil.toPixelFromDIP(ViewDefaults.FONT_SIZE_SP))),
           0,
           sb.length(),
           Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
@@ -268,7 +268,7 @@ public class ReactTextShadowNode extends LayoutShadowNode {
             int lines = reactCSSNode.mNumberOfLines != UNSET
                 ? Math.min(reactCSSNode.mNumberOfLines, layout.getLineCount())
                 : layout.getLineCount();
-            float lineHeight = PixelUtil.toPixelFromSP(reactCSSNode.mLineHeight);
+            float lineHeight = PixelUtil.toPixelFromDIP(reactCSSNode.mLineHeight);
             measureOutput.height = lineHeight * lines;
           }
         }
@@ -369,7 +369,7 @@ public class ReactTextShadowNode extends LayoutShadowNode {
   @ReactProp(name = ViewProps.FONT_SIZE, defaultFloat = UNSET)
   public void setFontSize(float fontSize) {
     if (fontSize != UNSET) {
-      fontSize = (float) Math.ceil(PixelUtil.toPixelFromSP(fontSize));
+      fontSize = (float) Math.ceil(PixelUtil.toPixelFromDIP(fontSize));
     }
     mFontSize = (int) fontSize;
     markUpdated();

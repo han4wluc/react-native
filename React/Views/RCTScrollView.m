@@ -890,6 +890,11 @@ RCT_SET_AND_PRESERVE_OFFSET(setScrollIndicatorInsets, UIEdgeInsets);
   }
 }
 
+- (void)beginRefreshing
+{
+  [_scrollView.refreshControl beginRefreshing];
+}
+
 - (void)endRefreshing
 {
   [_scrollView.refreshControl endRefreshing];

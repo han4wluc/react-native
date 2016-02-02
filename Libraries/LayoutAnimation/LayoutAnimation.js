@@ -24,6 +24,8 @@ var TypesEnum = {
   easeIn: true,
   easeOut: true,
   keyboard: true,
+  repeat: true,
+  autoreverse: true,
 };
 var Types = keyMirror(TypesEnum);
 

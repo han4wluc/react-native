@@ -324,10 +324,11 @@ var ScrollView = React.createClass({
     /**
      * @platform ios
      */
-    onRefreshStart: deprecatedPropType(
-      PropTypes.func,
-      'Use the `refreshControl` prop instead.'
-    ),
+    // onRefreshStart: deprecatedPropType(
+    //   PropTypes.func,
+    //   'Use the `refreshControl` prop instead.'
+    // ),
+    onRefreshStart:PropTypes.func,
   },
 
   mixins: [ScrollResponder.Mixin],
@@ -338,6 +339,12 @@ var ScrollView = React.createClass({
 
   setNativeProps: function(props: Object) {
     this.refs[SCROLLVIEW].setNativeProps(props);
+  },
+
+  beginRefreshing: function() {
+    RCTScrollViewManager.beginRefreshing(
+      React.findNodeHandle(this)
+    );
   },
 
   endRefreshing: function() {

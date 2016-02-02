@@ -28,6 +28,9 @@ shouldStartLoadForRequest:(NSMutableDictionary<NSString *, id> *)request
 @end
 
 @interface RCTWebView : RCTView
+{
+  @public UIWebView *_webView;
+}
 
 @property (nonatomic, weak) id<RCTWebViewDelegate> delegate;
 

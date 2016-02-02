@@ -49,6 +49,7 @@
 @property (nonatomic, copy) NSIndexSet *stickyHeaderIndices;
 @property (nonatomic, copy) RCTDirectEventBlock onRefreshStart;
 
+- (void)beginRefreshing;
 - (void)endRefreshing;
 
 @end

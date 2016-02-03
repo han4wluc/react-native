@@ -51,6 +51,7 @@
 
 - (void)beginRefreshing;
 - (void)endRefreshing;
+- (void)stopScrolling;
 
 @end
 

@@ -341,6 +341,12 @@ var ScrollView = React.createClass({
     this.refs[SCROLLVIEW].setNativeProps(props);
   },
 
+  stopScrolling: function() {
+    RCTScrollViewManager.stopScrolling(
+      React.findNodeHandle(this)
+    );
+  },
+
   beginRefreshing: function() {
     RCTScrollViewManager.beginRefreshing(
       React.findNodeHandle(this)

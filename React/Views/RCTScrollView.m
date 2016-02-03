@@ -893,8 +893,8 @@ RCT_SET_AND_PRESERVE_OFFSET(setScrollIndicatorInsets, UIEdgeInsets);
 - (void)stopScrolling
 {
 //  [_scrollView.scrollEnabled beginRefreshing];
-  _scrollView.scrollEnabled = NO;
-  _scrollView.scrollEnabled = YES;
+//  _scrollView.scrollEnabled = NO;
+//  _scrollView.scrollEnabled = YES;
   
   CGPoint offset = _scrollView.contentOffset;
   offset.x -= 1.0;

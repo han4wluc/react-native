@@ -236,8 +236,9 @@ var ListView = React.createClass({
       this.refs[SCROLLVIEW_REF].getScrollResponder();
   },
 
-  scrollTo: function(destY, destX) {
-    this.getScrollResponder().scrollResponderScrollTo(destX || 0, destY || 0);
+  scrollTo: function(destY, destX, animated: boolean = true) {
+    console.log('0----', animated);
+    this.getScrollResponder().scrollResponderScrollTo(destX || 0, destY || 0, animated);
   },
 
   setNativeProps: function(props) {

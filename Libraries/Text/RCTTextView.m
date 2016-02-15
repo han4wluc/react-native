@@ -465,6 +465,10 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
       @"height": @(contentHeight),
       @"width": @(textView.contentSize.width)
     },
+    @"selectedRange": @{
+      @"location": @(textView.selectedRange.location),
+      @"length"  : @(textView.selectedRange.length)
+    },
     @"target": self.reactTag,
     @"eventCount": @(_nativeEventCount),
   };

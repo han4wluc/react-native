@@ -495,7 +495,7 @@ var BaseConfig = {
   springTension: 200,
 
   // Velocity to start at when transitioning without gesture
-  defaultTransitionVelocity: 2.0,//1.5,
+  defaultTransitionVelocity: 3.0,//1.5,
 
   // Animation interpolators for horizontal transitioning:
   animationInterpolators: {

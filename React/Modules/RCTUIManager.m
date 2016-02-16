@@ -77,6 +77,10 @@ static UIViewAnimationOptions UIViewAnimationOptionsFromRCTAnimationType(RCTAnim
       return UIViewAnimationOptionCurveEaseOut;
     case RCTAnimationTypeEaseInEaseOut:
       return UIViewAnimationOptionCurveEaseInOut;
+    case RCTAnimationTypeRepeat:
+      return UIViewAnimationOptionRepeat;
+    case RCTAnimationTypeAutoreverse:
+      return UIViewAnimationOptionAutoreverse;
     case RCTAnimationTypeKeyboard:
       // http://stackoverflow.com/questions/18870447/how-to-use-the-default-ios7-uianimation-curve
       return (UIViewAnimationOptions)(7 << 16);

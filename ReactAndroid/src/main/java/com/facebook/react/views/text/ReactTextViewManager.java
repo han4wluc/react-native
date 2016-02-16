@@ -75,7 +75,7 @@ public class ReactTextViewManager extends BaseViewManager<ReactTextView, ReactTe
     if (Float.isNaN(lineHeight)) { // NaN will be used if property gets reset
       view.setLineSpacing(0, 1);
     } else {
-      view.setLineSpacing(PixelUtil.toPixelFromSP(lineHeight), 0);
+      view.setLineSpacing(PixelUtil.toPixelFromDIP(lineHeight), 0);
     }
   }
 

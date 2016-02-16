@@ -123,6 +123,32 @@ RCT_EXPORT_METHOD(calculateChildFrames:(nonnull NSNumber *)reactTag
   }];
 }
 
+RCT_EXPORT_METHOD(stopScrolling:(nonnull NSNumber *)reactTag){
+  [self.bridge.uiManager addUIBlock:^(__unused RCTUIManager *uiManager, NSDictionary<NSNumber *, RCTScrollView *> *viewRegistry) {
+    
+    RCTScrollView *view = viewRegistry[reactTag];
+    if (!view || ![view isKindOfClass:[RCTScrollView class]]) {
+      RCTLogError(@"Cannot find RCTScrollView with tag #%@", reactTag);
+      return;
+    }
+    [view stopScrolling];
+  }];
+}
+
+RCT_EXPORT_METHOD(beginRefreshing:(nonnull NSNumber *)reactTag)
+{
+  [self.bridge.uiManager addUIBlock:^(__unused RCTUIManager *uiManager, NSDictionary<NSNumber *, RCTScrollView *> *viewRegistry) {
+    
+    RCTScrollView *view = viewRegistry[reactTag];
+    if (!view || ![view isKindOfClass:[RCTScrollView class]]) {
+      RCTLogError(@"Cannot find RCTScrollView with tag #%@", reactTag);
+      return;
+    }
+    
+    [view beginRefreshing];
+  }];
+}
+
 RCT_EXPORT_METHOD(endRefreshing:(nonnull NSNumber *)reactTag)
 {
   [self.bridge.uiManager addUIBlock:

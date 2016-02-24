@@ -9,10 +9,15 @@
 
 package com.facebook.react.views.scroll;
 
+import android.view.MotionEvent;
+import android.view.View;
+
 import javax.annotation.Nullable;
 
 import java.util.Map;
 
+import com.facebook.react.bridge.Callback;
+import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.annotations.ReactProp;
@@ -51,6 +56,25 @@ public class ReactScrollViewManager
   public void setRemoveClippedSubviews(ReactScrollView view, boolean removeClippedSubviews) {
     view.setRemoveClippedSubviews(removeClippedSubviews);
   }
+
+//  @ReactMethod
+    @Override
+  public void enableScroll(ReactScrollView view) {
+      view.setOnTouchListener(null);
+  }
+
+//  @ReactMethod
+    @Override
+  public void disableScroll(ReactScrollView view) {
+      view.setOnTouchListener(new View.OnTouchListener() {
+          @Override
+          public boolean onTouch(View v, MotionEvent event) {
+              return true;
+          }
+      });
+  }
+
+
 
   /**
    * Computing momentum events is potentially expensive since we post a runnable on the UI thread

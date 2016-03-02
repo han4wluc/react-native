@@ -9,12 +9,16 @@
 
 package com.facebook.react.views.scroll;
 
+import android.view.MotionEvent;
+import android.view.View;
+
 import javax.annotation.Nullable;
 
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.ViewGroupManager;
+import com.facebook.react.views.recyclerview.RecyclerViewBackedScrollView;
 import com.facebook.react.views.view.ReactClippingViewGroupHelper;
 
 /**
@@ -48,6 +52,21 @@ public class ReactHorizontalScrollViewManager
   @ReactProp(name = "showsHorizontalScrollIndicator")
   public void setShowsHorizontalScrollIndicator(ReactHorizontalScrollView view, boolean value) {
     view.setHorizontalScrollBarEnabled(value);
+  }
+
+  @Override
+  public void enableScroll(ReactHorizontalScrollView view){
+      view.setOnTouchListener(null);
+  }
+
+  @Override
+  public void disableScroll(ReactHorizontalScrollView view) {
+      view.setOnTouchListener(new View.OnTouchListener() {
+          @Override
+          public boolean onTouch(View v, MotionEvent event) {
+              return true;
+          }
+      });
   }
 
   /**

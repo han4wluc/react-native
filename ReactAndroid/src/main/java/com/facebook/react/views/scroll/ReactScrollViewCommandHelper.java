@@ -26,10 +26,14 @@ public class ReactScrollViewCommandHelper {
 
   public static final int COMMAND_SCROLL_TO = 1;
   public static final int COMMAND_SCROLL_WITHOUT_ANIMATION_TO = 2;
+    public static final int COMMAND_ENABLE_SCROLL = 3;
+    public static final int COMMAND_DISABLE_SCROLL = 4;
 
   public interface ScrollCommandHandler<T> {
     void scrollTo(T scrollView, ScrollToCommandData data);
     void scrollWithoutAnimationTo(T scrollView, ScrollToCommandData data);
+    void enableScroll(T scrollView);
+    void disableScroll(T scrollView);
   }
 
   public static class ScrollToCommandData {
@@ -47,7 +51,11 @@ public class ReactScrollViewCommandHelper {
         "scrollTo",
         COMMAND_SCROLL_TO,
         "scrollWithoutAnimationTo",
-        COMMAND_SCROLL_WITHOUT_ANIMATION_TO);
+        COMMAND_SCROLL_WITHOUT_ANIMATION_TO,
+        "enableScroll",
+        COMMAND_ENABLE_SCROLL,
+        "disableScroll",
+        COMMAND_DISABLE_SCROLL);
   }
 
   public static <T> void receiveCommand(
@@ -70,6 +78,14 @@ public class ReactScrollViewCommandHelper {
         int destY = Math.round(PixelUtil.toPixelFromDIP(args.getDouble(1)));
         viewManager.scrollWithoutAnimationTo(scrollView, new ScrollToCommandData(destX, destY));
         return;
+      }
+      case COMMAND_ENABLE_SCROLL: {
+        viewManager.enableScroll(scrollView);
+          return;
+      }
+      case COMMAND_DISABLE_SCROLL: {
+        viewManager.disableScroll(scrollView);
+          return;
       }
       default:
         throw new IllegalArgumentException(String.format(

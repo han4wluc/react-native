@@ -390,6 +390,8 @@ public class ReactTextInputManager extends
               mEditText.getId(),
               SystemClock.uptimeMillis(),
               s.toString(),
+              start,
+              count,
               (int) PixelUtil.toDIPFromPixel(contentWidth),
               (int) PixelUtil.toDIPFromPixel(contentHeight),
               mEditText.incrementAndGetEventCounter()));

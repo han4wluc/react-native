@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 
 import java.util.Map;
 
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.facebook.react.bridge.ReadableArray;
@@ -13,6 +14,7 @@ import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.ViewGroupManager;
+import com.facebook.react.views.scroll.ReactScrollView;
 import com.facebook.react.views.scroll.ReactScrollViewCommandHelper;
 import com.facebook.react.views.scroll.ScrollEventType;
 
@@ -61,6 +63,21 @@ public class RecyclerViewBackedScrollViewManager extends
   public void removeViewAt(RecyclerViewBackedScrollView parent, int index) {
     parent.removeViewFromAdapter(index);
   }
+
+    @Override
+    public void enableScroll(RecyclerViewBackedScrollView parent){
+        parent.setOnTouchListener(null);
+    }
+
+    @Override
+    public void disableScroll(RecyclerViewBackedScrollView parent) {
+        parent.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
+    }
 
   /**
    * Provides implementation of commands supported by {@link ReactScrollViewManager}

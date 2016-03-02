@@ -273,6 +273,15 @@ var Navigator = React.createClass({
     };
   },
 
+  specialPop: function(){
+    let len = this.state.sceneConfigStack.length;
+    this.state.sceneConfigStack[len-1].defaultTransitionVelocity = 1000;
+    this.pop();
+  },
+  specialPush:function(route){
+    route.sceneConfig.defaultTransitionVelocity = 3.0;
+    this.push(route);
+  },
   getInitialState: function() {
     this._navigationBarNavigator = this.props.navigationBarNavigator || this;
 

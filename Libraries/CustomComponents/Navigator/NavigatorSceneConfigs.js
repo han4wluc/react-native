@@ -565,12 +565,12 @@ var NavigatorSceneConfigs = {
         edgeHitWidth: null,
         isDetachable: true,
       },
-      jumpForward: {
+      /*jumpForward: {
         ...BaseRightToLeftGesture,
         overswipe: BaseOverswipeConfig,
         edgeHitWidth: null,
         isDetachable: true,
-      },
+      },*/
     },
     animationInterpolators: {
       into: buildStyleInterpolator(FromTheRight),

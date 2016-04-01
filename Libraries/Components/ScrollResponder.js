@@ -202,7 +202,7 @@ var ScrollResponderMixin = {
    * a touch has already started.
    */
   scrollResponderHandleResponderReject: function() {
-    warning(false, "ScrollView doesn't take rejection well - scrolls anyway");
+    // warning(false, "ScrollView doesn't take rejection well - scrolls anyway");
   },
 
   /**

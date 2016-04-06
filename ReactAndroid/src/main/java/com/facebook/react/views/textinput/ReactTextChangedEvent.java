@@ -23,6 +23,8 @@ public class ReactTextChangedEvent extends Event<ReactTextChangedEvent> {
   public static final String EVENT_NAME = "topChange";
 
   private String mText;
+  private int mSelectionStart;
+  private int mSelectionLength;
   private int mContentWidth;
   private int mContentHeight;
   private int mEventCount;
@@ -31,11 +33,15 @@ public class ReactTextChangedEvent extends Event<ReactTextChangedEvent> {
       int viewId,
       long timestampMs,
       String text,
+      int selectionStart,
+      int selectionLength,
       int contentSizeWidth,
       int contentSizeHeight,
       int eventCount) {
     super(viewId, timestampMs);
     mText = text;
+    mSelectionStart = selectionStart;
+    mSelectionLength = selectionLength;
     mContentWidth = contentSizeWidth;
     mContentHeight = contentSizeHeight;
     mEventCount = eventCount;
@@ -55,9 +61,14 @@ public class ReactTextChangedEvent extends Event<ReactTextChangedEvent> {
     WritableMap eventData = Arguments.createMap();
     eventData.putString("text", mText);
 
+    WritableMap selectedRange = Arguments.createMap();
+    selectedRange.putInt("location", mSelectionStart);
+    selectedRange.putInt("length", mSelectionLength);
+
     WritableMap contentSize = Arguments.createMap();
     contentSize.putDouble("width", mContentWidth);
     contentSize.putDouble("height", mContentHeight);
+    eventData.putMap("selectedRange", selectedRange);
     eventData.putMap("contentSize", contentSize);
     eventData.putInt("eventCount", mEventCount);
 

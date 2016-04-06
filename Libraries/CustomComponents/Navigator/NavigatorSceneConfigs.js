@@ -37,7 +37,7 @@ var SCREEN_HEIGHT = Dimensions.get('window').height;
 var FadeToTheLeft = {
   // Rotate *requires* you to break out each individual component of
   // rotation (x, y, z, w)
-  transformTranslate: {
+  /*transformTranslate: {
     from: {x: 0, y: 0, z: 0},
     to: {x: -Math.round(Dimensions.get('window').width * 0.3), y: 0, z: 0},
     min: 0,
@@ -45,7 +45,7 @@ var FadeToTheLeft = {
     type: 'linear',
     extrapolate: true,
     round: PixelRatio.get(),
-  },
+  },*/
   // Uncomment to try rotation:
   // Quick guide to reasoning about rotations:
   // http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-17-quaternions/#Quaternions
@@ -74,7 +74,7 @@ var FadeToTheLeft = {
     extrapolate: false,
     round: 100,
   },
-  translateX: {
+  /*translateX: {
     from: 0,
     to: -Math.round(Dimensions.get('window').width * 0.3),
     min: 0,
@@ -82,7 +82,7 @@ var FadeToTheLeft = {
     type: 'linear',
     extrapolate: true,
     round: PixelRatio.get(),
-  },
+  },*/
   scaleX: {
     from: 1,
     to: 0.95,
@@ -103,14 +103,14 @@ var FadeToTheLeft = {
 
 var FadeToTheRight = {
   ...FadeToTheLeft,
-  transformTranslate: {
+  /*transformTranslate: {
     from: {x: 0, y: 0, z: 0},
     to: {x: Math.round(SCREEN_WIDTH * 0.3), y: 0, z: 0},
   },
   translateX: {
     from: 0,
     to: Math.round(SCREEN_WIDTH * 0.3),
-  }
+  }*/
 };
 
 var FadeIn = {
@@ -495,7 +495,7 @@ var BaseConfig = {
   springTension: 200,
 
   // Velocity to start at when transitioning without gesture
-  defaultTransitionVelocity: 1.5,
+  defaultTransitionVelocity: 3.0,//1.5,
 
   // Animation interpolators for horizontal transitioning:
   animationInterpolators: {
@@ -565,12 +565,12 @@ var NavigatorSceneConfigs = {
         edgeHitWidth: null,
         isDetachable: true,
       },
-      jumpForward: {
+      /*jumpForward: {
         ...BaseRightToLeftGesture,
         overswipe: BaseOverswipeConfig,
         edgeHitWidth: null,
         isDetachable: true,
-      },
+      },*/
     },
     animationInterpolators: {
       into: buildStyleInterpolator(FromTheRight),

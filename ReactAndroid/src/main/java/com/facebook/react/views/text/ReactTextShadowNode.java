@@ -25,6 +25,8 @@ import android.text.TextPaint;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.StrikethroughSpan;
+import android.text.style.UnderlineSpan;
 import android.widget.TextView;
 
 import com.facebook.csslayout.CSSConstants;
@@ -146,6 +148,12 @@ public class ReactTextShadowNode extends LayoutShadowNode {
                     textCSSNode.mFontFamily,
                     textCSSNode.getThemedContext().getAssets())));
       }
+      if (textCSSNode.mIsUnderlineTextDecorationSet) {
+        ops.add(new SetSpanOperation(start, end, new UnderlineSpan()));
+      }
+      if (textCSSNode.mIsLineThroughTextDecorationSet) {
+        ops.add(new SetSpanOperation(start, end, new StrikethroughSpan()));
+      }
       if (textCSSNode.mTextShadowOffsetDx != 0 || textCSSNode.mTextShadowOffsetDy != 0) {
         ops.add(new SetSpanOperation(
                 start,
@@ -171,7 +179,7 @@ public class ReactTextShadowNode extends LayoutShadowNode {
     buildSpannedFromTextCSSNode(textCSSNode, sb, ops);
     if (textCSSNode.mFontSize == UNSET) {
       sb.setSpan(
-          new AbsoluteSizeSpan((int) Math.ceil(PixelUtil.toPixelFromSP(ViewDefaults.FONT_SIZE_SP))),
+          new AbsoluteSizeSpan((int) Math.ceil(PixelUtil.toPixelFromDIP(ViewDefaults.FONT_SIZE_SP))),
           0,
           sb.length(),
           Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
@@ -256,7 +264,7 @@ public class ReactTextShadowNode extends LayoutShadowNode {
             int lines = reactCSSNode.mNumberOfLines != UNSET
                 ? Math.min(reactCSSNode.mNumberOfLines, layout.getLineCount())
                 : layout.getLineCount();
-            float lineHeight = PixelUtil.toPixelFromSP(reactCSSNode.mLineHeight);
+            float lineHeight = PixelUtil.toPixelFromDIP(reactCSSNode.mLineHeight);
             measureOutput.height = lineHeight * lines;
           }
         }
@@ -286,6 +294,9 @@ public class ReactTextShadowNode extends LayoutShadowNode {
   private float mTextShadowOffsetDy = 0;
   private float mTextShadowRadius = 1;
   private int mTextShadowColor = DEFAULT_TEXT_SHADOW_COLOR;
+
+  private boolean mIsUnderlineTextDecorationSet = false;
+  private boolean mIsLineThroughTextDecorationSet = false;
 
   /**
    * mFontStyle can be {@link Typeface#NORMAL} or {@link Typeface#ITALIC}.
@@ -364,7 +375,7 @@ public class ReactTextShadowNode extends LayoutShadowNode {
   @ReactProp(name = ViewProps.FONT_SIZE, defaultFloat = UNSET)
   public void setFontSize(float fontSize) {
     if (fontSize != UNSET) {
-      fontSize = (float) Math.ceil(PixelUtil.toPixelFromSP(fontSize));
+      fontSize = (float) Math.ceil(PixelUtil.toPixelFromDIP(fontSize));
     }
     mFontSize = (int) fontSize;
     markUpdated();
@@ -426,6 +437,18 @@ public class ReactTextShadowNode extends LayoutShadowNode {
       mFontStyle = fontStyle;
       markUpdated();
     }
+  }
+
+  @ReactProp(name = ViewProps.TEXT_DECORATION_LINE)
+  public void setTextDecorationLine(@Nullable String textDecorationLineString) {
+    for(String textDecorationLineSubString:textDecorationLineString.split(" ")) {
+      if ("underline".equals(textDecorationLineSubString)) {
+        mIsUnderlineTextDecorationSet = true;
+      } else if ("line-through".equals(textDecorationLineSubString)) {
+        mIsLineThroughTextDecorationSet = true;
+      }
+    }
+    markUpdated();
   }
 
   @ReactProp(name = PROP_SHADOW_OFFSET)

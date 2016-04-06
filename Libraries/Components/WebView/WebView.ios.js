@@ -313,7 +313,9 @@ var WebView = React.createClass({
         automaticallyAdjustContentInsets={this.props.automaticallyAdjustContentInsets}
         onLoadingStart={this.onLoadingStart}
         onLoadingFinish={this.onLoadingFinish}
-        onLoadingError={this.onLoadingError}
+        // onLoadingError={this.onLoadingError}
+        onLoadingError={this.props.onLoadingError ? this.props.onLoadingError : this.onLoadingError}
+        onContentSizeChange={this.onContentSizeChange}
         onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
         scalesPageToFit={this.props.scalesPageToFit}
         allowsInlineMediaPlayback={this.props.allowsInlineMediaPlayback}
@@ -394,6 +396,10 @@ var WebView = React.createClass({
     });
     this.updateNavigationState(event);
   },
+
+  onContentSizeChange: function(event: Event) {
+    this.props.onContentSizeChange && this.props.onContentSizeChange(event);
+  },
 });
 
 var RCTWebView = requireNativeComponent('RCTWebView', WebView, {
@@ -401,6 +407,7 @@ var RCTWebView = requireNativeComponent('RCTWebView', WebView, {
     onLoadingStart: true,
     onLoadingError: true,
     onLoadingFinish: true,
+    onContentSizeChange: true,
   },
 });
 

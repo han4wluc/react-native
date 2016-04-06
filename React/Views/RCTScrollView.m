@@ -917,6 +917,27 @@ RCT_SET_AND_PRESERVE_OFFSET(setScrollIndicatorInsets, scrollIndicatorInsets, UIE
   }
 }
 
+- (void)stopScrolling
+{
+//  [_scrollView.scrollEnabled beginRefreshing];
+//  _scrollView.scrollEnabled = NO;
+//  _scrollView.scrollEnabled = YES;
+  
+  CGPoint offset = _scrollView.contentOffset;
+  offset.x -= 1.0;
+  offset.y -= 1.0;
+  [_scrollView setContentOffset:offset animated:NO];
+  offset.x += 1.0;
+  offset.y += 1.0;
+  [_scrollView setContentOffset:offset animated:NO];
+  
+}
+
+- (void)beginRefreshing
+{
+  [_scrollView.refreshControl beginRefreshing];
+}
+
 - (void)endRefreshing
 {
   [_scrollView.refreshControl endRefreshing];

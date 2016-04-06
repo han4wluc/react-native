@@ -21,23 +21,31 @@
 
 NSString *const RCTJSNavigationScheme = @"react-js-navigation";
 
+@implementation UIWebView (CancelMenu)
+
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
+  return NO;
+}
+@end
+
 @interface RCTWebView () <UIWebViewDelegate, RCTAutoInsetsProtocol>
 
 @property (nonatomic, copy) RCTDirectEventBlock onLoadingStart;
 @property (nonatomic, copy) RCTDirectEventBlock onLoadingFinish;
 @property (nonatomic, copy) RCTDirectEventBlock onLoadingError;
 @property (nonatomic, copy) RCTDirectEventBlock onShouldStartLoadWithRequest;
+@property (nonatomic, copy) RCTDirectEventBlock onContentSizeChange;
 
 @end
 
 @implementation RCTWebView
 {
-  UIWebView *_webView;
   NSString *_injectedJavaScript;
 }
 
 - (void)dealloc
 {
+  [_webView.scrollView removeObserver:self forKeyPath:@"contentSize"];
   _webView.delegate = nil;
 }
 
@@ -49,6 +57,7 @@ NSString *const RCTJSNavigationScheme = @"react-js-navigation";
     _contentInset = UIEdgeInsetsZero;
     _webView = [[UIWebView alloc] initWithFrame:self.bounds];
     _webView.delegate = self;
+    [_webView.scrollView addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:nil];
     [self addSubview:_webView];
   }
   return self;
@@ -248,6 +257,22 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
   // we only need the final 'finishLoad' call so only fire the event when we're actually done loading.
   else if (_onLoadingFinish && !webView.loading && ![webView.request.URL.absoluteString isEqualToString:@"about:blank"]) {
     _onLoadingFinish([self baseEvent]);
+  }
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+  if ([keyPath isEqualToString:@"contentSize"]) {
+    //    CGSize oldSize = [change[NSKeyValueChangeOldKey] CGSizeValue];
+    CGSize newSize = [change[NSKeyValueChangeNewKey] CGSizeValue];
+    if (_onContentSizeChange && _webView.scrollView.scrollEnabled == NO) {
+      NSMutableDictionary<NSString *, id> *event = [self baseEvent];
+      [event addEntriesFromDictionary:@{
+                                        @"width":@(newSize.width),
+                                        @"height":@(newSize.height)
+                                        }];
+      _onContentSizeChange(event);
+    }
+    
   }
 }
 

@@ -448,6 +448,8 @@ public class ReactTextInputManager extends BaseViewManager<ReactEditText, Layout
               mEditText.getId(),
               SystemClock.nanoTime(),
               s.toString(),
+              start,
+              count,
               (int) PixelUtil.toDIPFromPixel(contentWidth),
               (int) PixelUtil.toDIPFromPixel(contentHeight),
               mEditText.incrementAndGetEventCounter()));

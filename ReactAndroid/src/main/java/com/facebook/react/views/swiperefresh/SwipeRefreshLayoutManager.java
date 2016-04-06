@@ -107,7 +107,7 @@ public class SwipeRefreshLayoutManager extends ViewGroupManager<ReactSwipeRefres
   @Override
   public Map<String, Object> getExportedCustomDirectEventTypeConstants() {
     return MapBuilder.<String, Object>builder()
-        .put("topRefresh", MapBuilder.of("registrationName", "onRefresh"))
+        .put("topRefresh", MapBuilder.of("registrationName", "onRefreshTwo"))
         .build();
   }
 }

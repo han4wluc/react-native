@@ -202,7 +202,7 @@ var ScrollResponderMixin = {
    * a touch has already started.
    */
   scrollResponderHandleResponderReject: function() {
-    warning(false, "ScrollView doesn't take rejection well - scrolls anyway");
+    // warning(false, "ScrollView doesn't take rejection well - scrolls anyway");
   },
 
   /**
@@ -386,6 +386,22 @@ var ScrollResponderMixin = {
     );
   },
 
+  scrollResponderEnableScroll: function(){
+    UIManager.dispatchViewManagerCommand(
+      React.findNodeHandle(this),
+      UIManager.RCTScrollView.Commands['enableScroll'],
+      [],
+    );
+  },
+
+  scrollResponderDisableScroll: function(){
+    UIManager.dispatchViewManagerCommand(
+      React.findNodeHandle(this),
+      UIManager.RCTScrollView.Commands['disableScroll'],
+      [],
+    );
+  },
+
   /**
    * Deprecated, do not use.
    */
@@ -536,7 +552,8 @@ var ScrollResponderMixin = {
   scrollResponderKeyboardDidHide: function(e: Event) {
     this.keyboardWillOpenTo = null;
     this.props.onKeyboardDidHide && this.props.onKeyboardDidHide(e);
-  }
+  },
+
 
 };
 

@@ -842,6 +842,8 @@ RCT_ENUM_CONVERTER(RCTAnimationType, (@{
   @"easeOut": @(RCTAnimationTypeEaseOut),
   @"easeInEaseOut": @(RCTAnimationTypeEaseInEaseOut),
   @"keyboard": @(RCTAnimationTypeKeyboard),
+  @"repeat": @(RCTAnimationTypeRepeat),
+  @"autoreverse": @(RCTAnimationTypeAutoreverse),
 }), RCTAnimationTypeEaseInEaseOut, integerValue)
 
 @end

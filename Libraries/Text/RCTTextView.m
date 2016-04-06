@@ -317,7 +317,7 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
                                          text:self.text
                                           key:nil
                                    eventCount:_nativeEventCount];
-      [self resignFirstResponder];
+//      [self resignFirstResponder];
       return NO;
     }
   }
@@ -464,6 +464,10 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
     @"contentSize": @{
       @"height": @(contentHeight),
       @"width": @(textView.contentSize.width)
+    },
+    @"selectedRange": @{
+      @"location": @(textView.selectedRange.location),
+      @"length"  : @(textView.selectedRange.length)
     },
     @"target": self.reactTag,
     @"eventCount": @(_nativeEventCount),

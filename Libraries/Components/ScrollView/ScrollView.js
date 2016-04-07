@@ -315,10 +315,11 @@ var ScrollView = React.createClass({
     /**
      * @platform ios
      */
-    onRefreshStart: deprecatedPropType(
-      PropTypes.func,
-      'Use the `refreshControl` prop instead.'
-    ),
+    onRefreshStart: PropTypes.func,
+    // onRefreshStart: deprecatedPropType(
+    //   PropTypes.func,
+    //   'Use the `refreshControl` prop instead.'
+    // ),
 
     /**
      * Sometimes a scrollview takes up more space than its content fills. When this is

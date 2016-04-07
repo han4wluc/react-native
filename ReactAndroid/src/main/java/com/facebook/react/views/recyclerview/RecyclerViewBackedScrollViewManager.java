@@ -64,21 +64,6 @@ public class RecyclerViewBackedScrollViewManager extends
     parent.removeViewFromAdapter(index);
   }
 
-    @Override
-    public void enableScroll(RecyclerViewBackedScrollView parent){
-        parent.setOnTouchListener(null);
-    }
-
-    @Override
-    public void disableScroll(RecyclerViewBackedScrollView parent) {
-        parent.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;
-            }
-        });
-    }
-
   /**
    * Provides implementation of commands supported by {@link ReactScrollViewManager}
    */

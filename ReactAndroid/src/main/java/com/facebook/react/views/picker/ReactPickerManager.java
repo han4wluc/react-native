@@ -20,8 +20,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.facebook.infer.annotation.Assertions;
+import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.common.MapBuilder;
 import com.facebook.react.common.SystemClock;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
@@ -31,6 +33,8 @@ import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.events.EventDispatcher;
 import com.facebook.react.views.picker.events.PickerItemSelectEvent;
 
+import java.util.Map;
+
 /**
  * {@link ViewManager} for the {@link ReactPicker} view. This is abstract because the
  * {@link Spinner} doesn't support setting the mode (dropdown/dialog) outside the constructor, so
@@ -39,6 +43,8 @@ import com.facebook.react.views.picker.events.PickerItemSelectEvent;
  * React component.
  */
 public abstract class ReactPickerManager extends SimpleViewManager<ReactPicker> {
+
+  public static final int COMMAND_PERFORM_CLICK = 1;
 
   @ReactProp(name = "items")
   public void setItems(ReactPicker view, @Nullable ReadableArray items) {
@@ -93,6 +99,32 @@ public abstract class ReactPickerManager extends SimpleViewManager<ReactPicker> 
             new PickerEventEmitter(
                     picker,
                     reactContext.getNativeModule(UIManagerModule.class).getEventDispatcher()));
+  }
+
+  @Override
+  public Map<String,Integer> getCommandsMap() {
+    return MapBuilder.of(
+            "performClick",
+            COMMAND_PERFORM_CLICK);
+  }
+
+  @Override
+  public void receiveCommand(
+          ReactPicker view,
+          int commandType,
+          @Nullable ReadableArray args) {
+    Assertions.assertNotNull(view);
+    switch (commandType) {
+      case COMMAND_PERFORM_CLICK: {
+        view.performClick();
+        return;
+      }
+      default:
+        throw new IllegalArgumentException(String.format(
+                "Unsupported command %d received by %s.",
+                commandType,
+                getClass().getSimpleName()));
+    }
   }
 
   private static class ReactPickerAdapter extends ArrayAdapter<ReadableMap> {

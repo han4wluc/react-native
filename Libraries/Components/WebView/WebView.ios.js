@@ -375,6 +375,7 @@ var WebView = React.createClass({
   },
 
   onLoadingError: function(event: Event) {
+    return;
     event.persist(); // persist this event because we need to store it
     var {onError, onLoadEnd} = this.props;
     onError && onError(event);

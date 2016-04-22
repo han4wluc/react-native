@@ -94,6 +94,11 @@ const RefreshControl = React.createClass({
      */
     tintColor: ColorPropType,
     /**
+     * Title color.
+     * @platform ios
+     */
+    titleColor: ColorPropType,
+    /**
      * The title displayed under the refresh indicator.
      * @platform ios
      */
@@ -134,7 +139,10 @@ const RefreshControl = React.createClass({
 
   _onRefresh() {
     this.props.onRefresh && this.props.onRefresh();
-    this._nativeRef.setNativeProps({refreshing: this.props.refreshing});
+
+    if (this._nativeRef) {
+      this._nativeRef.setNativeProps({refreshing: this.props.refreshing});
+    }
   },
 });
 

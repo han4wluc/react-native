@@ -391,7 +391,7 @@ var WebView = React.createClass({
     onError && onError(event);
     onLoadEnd && onLoadEnd(event);
     console.warn('Encountered an error loading page', event.nativeEvent);
-
+    return;
     this.setState({
       lastErrorEvent: event.nativeEvent,
       viewState: WebViewState.ERROR

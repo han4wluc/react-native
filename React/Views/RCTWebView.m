@@ -203,7 +203,8 @@ RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
     NSMutableDictionary<NSString *, id> *event = [self baseEvent];
     [event addEntriesFromDictionary: @{
       @"url": (request.URL).absoluteString,
-      @"navigationType": navigationTypes[@(navigationType)]
+      @"navigationType": navigationTypes[@(navigationType)],
+      @"method":request.HTTPMethod,
     }];
     if (![self.delegate webView:self
       shouldStartLoadForRequest:event

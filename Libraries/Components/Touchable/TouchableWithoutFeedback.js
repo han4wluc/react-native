@@ -153,11 +153,11 @@ const TouchableWithoutFeedback = React.createClass({
     // Note(avik): remove dynamic typecast once Flow has been upgraded
     const child = onlyChild(this.props.children);
     let children = child.props.children;
-    warning(
+    /*warning(
       !child.type || child.type.displayName !== 'Text',
       'TouchableWithoutFeedback does not work well with Text children. Wrap children in a View instead. See ' +
         ((child._owner && child._owner.getName && child._owner.getName()) || '<unknown>')
-    );
+    );*/
     if (Touchable.TOUCH_TARGET_DEBUG && child.type && child.type.displayName === 'View') {
       if (!Array.isArray(children)) {
         children = [children];

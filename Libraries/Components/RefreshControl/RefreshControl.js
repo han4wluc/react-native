@@ -20,7 +20,8 @@ const View = require('View');
 const requireNativeComponent = require('requireNativeComponent');
 
 if (Platform.OS === 'android') {
-  var RefreshLayoutConsts = require('NativeModules').UIManager.AndroidSwipeRefreshLayout.Constants;
+  var RefreshLayoutConsts = {SIZE: 1};
+  // var RefreshLayoutConsts = require('NativeModules').UIManager.AndroidSwipeRefreshLayout.Constants;
 } else {
   var RefreshLayoutConsts = {SIZE: {}};
 }

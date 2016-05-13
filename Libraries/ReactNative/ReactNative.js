@@ -38,11 +38,11 @@ for (const key in ReactIsomorphic) {
   if (__DEV__) {
     Object.defineProperty(ReactNative, key, {
       get: function() {
-        warning(
-          dedupe[key],
-          'ReactNative.' + key + ' is deprecated. Use React.' + key +
-          ' from the "react" package instead.'
-        );
+        // warning(
+        //   dedupe[key],
+        //   'ReactNative.' + key + ' is deprecated. Use React.' + key +
+        //   ' from the "react" package instead.'
+        // );
         dedupe[key] = true;
         return ReactIsomorphic[key];
       },

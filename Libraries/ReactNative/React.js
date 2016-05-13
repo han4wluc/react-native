@@ -24,11 +24,11 @@ for (const key in ReactNativeImpl) {
   if (__DEV__) {
     Object.defineProperty(React, key, {
       get: function() {
-        warning(
-          dedupe[key],
-          'React.' + key + ' is deprecated. Use ReactNative.' + key +
-          ' from the "react-native" package instead.'
-        );
+        // warning(
+        //   dedupe[key],
+        //   'React.' + key + ' is deprecated. Use ReactNative.' + key +
+        //   ' from the "react-native" package instead.'
+        // );
         dedupe[key] = true;
         return ReactNativeImpl[key];
       },

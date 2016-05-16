@@ -375,6 +375,11 @@ var self = {};
       }
 
       var xhr = new XMLHttpRequest()
+      
+      xhr.timeout   = 30000;
+      xhr.ontimeout = function(){
+        reject(new TypeError('Timeout'))
+      }
 
       function responseURL() {
         if ('responseURL' in xhr) {

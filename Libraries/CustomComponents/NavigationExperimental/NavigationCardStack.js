@@ -136,9 +136,13 @@ class NavigationCardStack extends React.Component<DefaultProps, Props, void> {
       NavigationCardStackStyleInterpolator.forVertical(props) :
       NavigationCardStackStyleInterpolator.forHorizontal(props);
 
-    const panHandlers = isVertical ?
+    let panHandlers = isVertical ?
       NavigationCardStackPanResponder.forVertical(props) :
       NavigationCardStackPanResponder.forHorizontal(props);
+
+    if (!this.props.enableBackGesture){
+      panHandlers = null;
+    }
 
     return (
       <NavigationCard

@@ -84,6 +84,39 @@ type DefaultProps = {
  *   +-+            |
  *     +------------+
  */
+
+// 动画
+const Animated = require('Animated');
+
+// 无动画跳转
+function applyWithoutAnimation(
+  position,
+  navigationState,
+): void {
+  Animated.timing(
+    position,
+    {
+      duration: 0,
+      bounciness: 0,
+      toValue: navigationState.index,
+    }
+  ).start();
+}
+
+// 有动画跳转
+function applyDefaultAnimation(
+  position,
+  navigationState,
+): void {
+  Animated.spring(
+    position,
+    {
+      bounciness: 0,
+      toValue: navigationState.index,
+    }
+  ).start();
+}
+
 class NavigationCardStack extends React.Component<DefaultProps, Props, void> {
   _renderScene : NavigationSceneRenderer;
 
@@ -116,7 +149,13 @@ class NavigationCardStack extends React.Component<DefaultProps, Props, void> {
     );
   }
 
+  setAnimation(animated: boolean) {
+    this._applyAnimation = animated ? applyDefaultAnimation : applyWithoutAnimation;
+  }
+
   render(): ReactElement {
+    var applyAnimation = this._applyAnimation ? this._applyAnimation : applyDefaultAnimation;
+
     return (
       <NavigationAnimatedView
         navigationState={this.props.navigationState}
@@ -125,6 +164,7 @@ class NavigationCardStack extends React.Component<DefaultProps, Props, void> {
         onNavigate={this.props.onNavigate}
         // $FlowFixMe - style should be declared
         style={[styles.animatedView, this.props.style]}
+        applyAnimation={applyAnimation}
       />
     );
   }
@@ -136,6 +176,7 @@ class NavigationCardStack extends React.Component<DefaultProps, Props, void> {
       NavigationCardStackStyleInterpolator.forVertical(props) :
       NavigationCardStackStyleInterpolator.forHorizontal(props);
 
+    // const panHandlers = isVertical ?
     let panHandlers = isVertical ?
       NavigationCardStackPanResponder.forVertical(props) :
       NavigationCardStackPanResponder.forHorizontal(props);

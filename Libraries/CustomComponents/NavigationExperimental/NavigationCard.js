@@ -127,7 +127,7 @@ class NavigationCard extends React.Component<any, Props, any> {
 
     return (
       <Animated.View
-        {...viewPanHandlers}
+        // {...viewPanHandlers}
         pointerEvents={pointerEvents}
         ref={this.props.onComponentRef}
         style={[styles.main, viewStyle]}>

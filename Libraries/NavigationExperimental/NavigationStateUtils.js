@@ -73,6 +73,24 @@ function pop(state: NavigationParentState): NavigationParentState {
   };
 }
 
+function popToIndex(state: NavigationParentState, index): NavigationParentState {
+  const lastChildren = state.children;
+  return {
+    ...state,
+    children: lastChildren.slice(0, index + 1),
+    index: index,
+  };
+}
+
+function popIndexes(state: NavigationParentState, index): NavigationParentState {
+  const lastChildren = state.children;
+  return {
+    ...state,
+    children: lastChildren.slice(0, lastChildren.length - index),
+    index: lastChildren.length - 1 - index,
+  };
+}
+
 function reset(state: NavigationState, nextChildren: ?Array<NavigationState>, nextIndex: ?number): NavigationState {
   const parentState = getParent(state);
   if (!parentState) {
@@ -181,6 +199,8 @@ const NavigationStateUtils = {
   indexOf,
   push,
   pop,
+  popToIndex,
+  popIndexes,
   reset,
   set: set,
   jumpToIndex,

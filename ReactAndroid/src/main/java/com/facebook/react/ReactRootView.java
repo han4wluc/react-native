@@ -15,6 +15,7 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -292,6 +293,31 @@ public class ReactRootView extends SizeMonitoringFrameLayout implements RootView
       mMinKeyboardHeightDetected = (int) PixelUtil.toPixelFromDIP(60);
     }
 
+    private WritableMap startCoordinates = null;
+//    private WritableMap endCoordinates = null;
+    private WritableMap getCurrentCoordinates() {
+//      WritableMap params = Arguments.createMap();
+      WritableMap coordinates = Arguments.createMap();
+      coordinates.putDouble("screenY", (int)PixelUtil.toDIPFromPixel(mVisibleViewArea.bottom) - 25);
+      coordinates.putDouble("screenX", (int)PixelUtil.toDIPFromPixel(mVisibleViewArea.left));
+      coordinates.putDouble("width", (int)PixelUtil.toDIPFromPixel(mVisibleViewArea.width()));
+      coordinates.putDouble("height", (int)PixelUtil.toDIPFromPixel(mKeyboardHeight));
+//      params.putMap("endCoordinates", coordinates);
+      return coordinates;
+    }
+
+    private WritableMap getKeyboardHiddenCoordinates() {
+//      WritableMap params = Arguments.createMap();
+      WritableMap coordinates = Arguments.createMap();
+      coordinates.putDouble("screenY", (int)PixelUtil.toDIPFromPixel(getHeight()));
+      coordinates.putDouble("screenX", (int)PixelUtil.toDIPFromPixel(mVisibleViewArea.left));
+      coordinates.putDouble("width", (int)PixelUtil.toDIPFromPixel(mVisibleViewArea.width()));
+      coordinates.putDouble("height", 0);
+//      params.putMap("endCoordinates", coordinates);
+      return coordinates;
+    }
+
+
     @Override
     public void onGlobalLayout() {
       if (mReactInstanceManager == null || !mIsAttachedToInstance ||
@@ -306,25 +332,45 @@ public class ReactRootView extends SizeMonitoringFrameLayout implements RootView
       final int heightDiff =
           DisplayMetricsHolder.getWindowDisplayMetrics().heightPixels - mVisibleViewArea.bottom;
       if (mKeyboardHeight != heightDiff && heightDiff > mMinKeyboardHeightDetected) {
+//        Log.e("keyboardShow", getCurrentCoordinates().toString());
+//        Log.e("keyboardShow", "__");
+
         // keyboard is now showing, or the keyboard height has changed
         mKeyboardHeight = heightDiff;
-        WritableMap params = Arguments.createMap();
-        WritableMap coordinates = Arguments.createMap();
-        coordinates.putDouble("screenY", PixelUtil.toDIPFromPixel(mVisibleViewArea.bottom));
-        coordinates.putDouble("screenX", PixelUtil.toDIPFromPixel(mVisibleViewArea.left));
-        coordinates.putDouble("width", PixelUtil.toDIPFromPixel(mVisibleViewArea.width()));
-        coordinates.putDouble("height", PixelUtil.toDIPFromPixel(mKeyboardHeight));
-        params.putMap("endCoordinates", coordinates);
-        sendEvent("keyboardDidShow", params);
+//        WritableMap coordinates = Arguments.createMap();
+//        coordinates.putDouble("screenY", PixelUtil.toDIPFromPixel(mVisibleViewArea.bottom));
+//        coordinates.putDouble("screenX", PixelUtil.toDIPFromPixel(mVisibleViewArea.left));
+//        coordinates.putDouble("width", PixelUtil.toDIPFromPixel(mVisibleViewArea.width()));
+//        coordinates.putDouble("height", PixelUtil.toDIPFromPixel(mKeyboardHeight));
+
+        WritableMap event = Arguments.createMap();
+        event.putMap("startCoordinates", startCoordinates == null ? getKeyboardHiddenCoordinates() : startCoordinates);
+//        event.putMap("endCoordinates", coordinates);
+        event.putMap("endCoordinates", getCurrentCoordinates());
+        sendEvent("keyboardWillChangeFrame", event);
+
+        startCoordinates = getCurrentCoordinates();
       } else if (mKeyboardHeight != 0 && heightDiff <= mMinKeyboardHeightDetected) {
+//        Log.e("keyboardHide", getKeyboardHiddenCoordinates().toString());
+//        Log.e("keyboardHide", "__");
+
         // keyboard is now hidden
         mKeyboardHeight = 0;
-        sendEvent("keyboardDidHide", null);
+//        sendEvent("keyboardDidHide", null);
+//        sendEvent("keyboardDidHide", getCurrentCoordinates());
+        WritableMap event = Arguments.createMap();
+        event.putMap("startCoordicates", startCoordinates);
+        event.putMap("endCoordinates", getKeyboardHiddenCoordinates());
+        sendEvent("keyboardWillChangeFrame", event);
+//        sendEvent();
+
+        startCoordinates = getKeyboardHiddenCoordinates();
       }
     }
 
     private void sendEvent(String eventName, @Nullable WritableMap params) {
       if (mReactInstanceManager != null) {
+//        Log.e("sendEvent", params.toString());
         mReactInstanceManager.getCurrentReactContext()
             .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
             .emit(eventName, params);
